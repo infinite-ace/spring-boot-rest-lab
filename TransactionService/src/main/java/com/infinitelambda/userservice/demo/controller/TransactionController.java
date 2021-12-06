@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +16,7 @@ import java.util.Map;
 @RestController
 public class TransactionController {
 
-    Map<String, Transaction> transactionsVault = new HashMap();
+    Map<String, List<Transaction>> transactionsVault = new HashMap();
 
     @GetMapping("/all")
     public Map getAllTransactions() {
@@ -21,7 +24,31 @@ public class TransactionController {
     }
 
     @PostMapping("/register")
-    public void registerTransaction(@RequestBody HashMap<String, String> payload) {
+    public List<Transaction> registerTransaction(@RequestBody HashMap<String, String> payload) {
         //TODO
+        System.out.println(payload);
+
+        String userUUID = payload.get("id");
+        Double amount = Double.parseDouble(payload.get("amount"));
+        String vendor = payload.get("vendor");
+        LocalDate transactionDate = LocalDate.now();
+        LocalTime transactionTime = LocalTime.now();
+
+        Transaction transaction = new Transaction();
+        transaction.setAmount(amount);
+        transaction.setVendor(vendor);
+        transaction.setDate(transactionDate);
+        transaction.setTime(transactionTime);
+
+
+        if (transactionsVault.get(userUUID) == null) {
+            List<Transaction> initialList = new ArrayList<>();
+            initialList.add(transaction);
+            transactionsVault.put(userUUID, initialList);
+        } else {
+            transactionsVault.get(userUUID).add(transaction);
+        }
+
+        return transactionsVault.get(userUUID);
     }
 }

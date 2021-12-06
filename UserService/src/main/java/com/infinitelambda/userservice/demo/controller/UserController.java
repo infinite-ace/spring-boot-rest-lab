@@ -95,5 +95,22 @@ public class UserController {
         return address;
     }
 
+    @PostMapping(value = "/transaction", consumes = "application/json", produces = "application/json")
+    public Map transaction(@RequestBody HashMap<String, String> transaction) {
 
+        String url = "http://localhost:8024/register";
+
+        try {
+            this.restTemplate.postForObject(url, transaction, List.class);
+        } catch (Exception e) {
+            String errorMessage = "Transaction service is not running.";
+            System.err.println(errorMessage);
+            throw new RuntimeException(errorMessage);
+        }
+
+        // Response msg
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Transaction executed and saved successfully!");
+        return response;
+    }
 }
