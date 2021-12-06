@@ -48,11 +48,16 @@ public class AddressController {
 
     // Additional endpoints
     @PostMapping("/addAddress")
-    public void addAddress(@RequestBody HashMap<String, String> payload) {
+    public Map addAddress(@RequestBody HashMap<String, String> payload) {
         String uuid = payload.get("id");
         String address = payload.get("address");
 
         addressBook.get(uuid).add(address);
+
+        // Response msg
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Address added successfuly!");
+        return response;
     }
 
 

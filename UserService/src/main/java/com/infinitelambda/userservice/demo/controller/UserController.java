@@ -55,6 +55,21 @@ public class UserController {
         return usersMap.get(id);
     }
 
+    @PutMapping(value = "/modify", consumes = "application/json", produces = "application/json")
+    public UserDTO modify(@RequestBody HashMap<String, String> payload) {
+        String id = payload.get("id");
+
+        UserDTO modifiedUser = usersMap.get(id);
+        modifiedUser.setFirstName(payload.get("firstname"));
+        modifiedUser.setLastName(payload.get("lastname"));
+
+        usersMap.remove(usersMap.get(id));
+        usersMap.put(id, modifiedUser);
+
+
+        return modifiedUser;
+    }
+
     @DeleteMapping("/delete")
     public Map deleteUser(@RequestBody HashMap<String,String> payload) {
         String uuid = payload.get("id");
