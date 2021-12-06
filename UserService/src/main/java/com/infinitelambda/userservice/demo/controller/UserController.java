@@ -86,6 +86,12 @@ public class UserController {
     }
 
     // Additional endpoints
+
+    @GetMapping("/all")
+    public Map getAll() {
+        return usersMap;
+    }
+
     @PostMapping(value = "/getAddress", consumes = "application/json", produces = "application/json")
     public String getAddress(@RequestBody String userUUID) {
 

@@ -1,10 +1,7 @@
 package com.infinitelambda.userservice.demo.controller;
 
 import com.infinitelambda.userservice.demo.model.Transaction;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -50,5 +47,14 @@ public class TransactionController {
         }
 
         return transactionsVault.get(userUUID);
+    }
+
+    @DeleteMapping("/delete")
+    public Map delete() {
+        transactionsVault.clear();
+        // Response msg
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "All transactions deleted!");
+        return response;
     }
 }
