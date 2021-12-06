@@ -27,7 +27,7 @@ public class UserController {
 
     // Crud Methods
     @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
-    public Map createUser(@RequestBody Map<String, String> payload) {
+    public Map createUser(@RequestBody Map<String, String> payload) throws Exception {
 
         UserDTO userDTO = new UserDTO();
         userDTO.setFirstName(payload.get("firstName"));
@@ -37,8 +37,13 @@ public class UserController {
         Map<String, String> addressForUser = new HashMap<>();
         addressForUser.put(payload.get("id"), payload.get("address"));
 
-        this.restTemplate.postForObject(url, addressForUser, String.class);
-
+        try {
+            this.restTemplate.postForObject(url, addressForUser, String.class);
+        } catch (Exception e) {
+            String errorMessage = "Address service is not running.";
+            System.err.println(errorMessage);
+            throw new RuntimeException(errorMessage);
+        }
 
         usersMap.put(payload.get("id"), userDTO);
         return usersMap;
