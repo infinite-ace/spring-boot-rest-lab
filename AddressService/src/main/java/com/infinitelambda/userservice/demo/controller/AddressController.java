@@ -4,16 +4,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 public class AddressController {
 
-    @PostMapping("/create")
-    public String createAddress(@RequestBody String payload) {
+    private Map<String, String> addressBook = new HashMap<>();
 
-        System.out.println("Address is: " + payload);
-        return "Creating Address";
+    @PostMapping("/create")
+    public void createAddress(@RequestBody HashMap<String,String> payload) {
+
+        addressBook.putAll(payload);
+        System.out.println(addressBook);
     }
 
 }

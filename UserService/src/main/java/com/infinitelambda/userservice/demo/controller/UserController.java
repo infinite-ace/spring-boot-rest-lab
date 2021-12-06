@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -29,7 +30,9 @@ public class UserController {
         userDTO.setLastName(payload.get("lastName"));
 
         String url = "http://localhost:8008/create";
-        String address =  this.restTemplate.postForObject(url, payload.get("address"), String.class);
+        Map<String, String> addressForUser = new HashMap<>();
+        addressForUser.put(payload.get("id"),payload.get("address"));
+        this.restTemplate.postForObject(url, addressForUser, String.class);
 
         return "Creating User.";
     }
