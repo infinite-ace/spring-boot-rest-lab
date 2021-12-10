@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -90,6 +91,14 @@ public class UserController {
     @GetMapping("/all")
     public Map getAll() {
         return usersMap;
+    }
+
+    @GetMapping("/test")
+    public Map test() {
+        Map<String, LocalDateTime> response = new HashMap<>();
+//        response.put("Deleted user is", deleted.toString());
+        response.put("date", LocalDateTime.now());
+        return response;
     }
 
     @PostMapping(value = "/getAddress", consumes = "application/json", produces = "application/json")

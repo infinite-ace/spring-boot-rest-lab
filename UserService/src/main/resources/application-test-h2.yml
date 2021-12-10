@@ -1,0 +1,23 @@
+server:
+  port: 8004
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tap-spring-hibernate
+    username: root
+    password: root
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        show-sql: false
+        format-sql: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+  h2:
+    console:
+      enabled: false
