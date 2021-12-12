@@ -1,4 +1,4 @@
-package com.infinitelambda.userservice.demo.controller;
+package com.infinitelambda.addressservice.controller;
 
 import org.springframework.web.bind.annotation.*;
 

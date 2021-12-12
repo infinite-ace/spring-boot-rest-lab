@@ -1,4 +1,4 @@
-package com.infinitelambda.userservice.demo;
+package com.infinitelambda.transactionservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

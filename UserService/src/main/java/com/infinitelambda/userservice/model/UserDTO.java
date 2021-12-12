@@ -1,4 +1,4 @@
-package com.infinitelambda.userservice.demo.model;
+package com.infinitelambda.userservice.model;
 
 import lombok.Data;
 
@@ -16,10 +16,5 @@ public class UserDTO {
     private String lastName;
 
     public UserDTO() {
-    }
-
-    @Override
-    public String toString() {
-        return firstName + " " + lastName;
     }
 }

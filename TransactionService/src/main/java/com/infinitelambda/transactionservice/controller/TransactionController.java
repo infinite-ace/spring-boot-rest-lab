@@ -1,6 +1,6 @@
-package com.infinitelambda.userservice.demo.controller;
+package com.infinitelambda.transactionservice.controller;
 
-import com.infinitelambda.userservice.demo.model.Transaction;
+import com.infinitelambda.transactionservice.model.Transaction;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;

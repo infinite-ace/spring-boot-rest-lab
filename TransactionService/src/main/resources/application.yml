@@ -1,0 +1,25 @@
+server:
+  port: 8024
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:tap-spring-hibernate
+    username: root
+    password: root
+  jpa:
+    repositories:
+      bootstrap-mode: default
+    show-sql: true
+    properties:
+      hibernate:
+        show-sql: false
+        format-sql: false
+        dialect: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+  h2:
+    console:
+      enabled: true

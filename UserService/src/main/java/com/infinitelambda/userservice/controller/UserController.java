@@ -1,14 +1,12 @@
-package com.infinitelambda.userservice.demo.controller;
+package com.infinitelambda.userservice.controller;
 
-import com.infinitelambda.userservice.demo.model.UserDTO;
-import org.apache.catalina.User;
+import com.infinitelambda.userservice.model.UserDTO;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
