@@ -1,6 +1,6 @@
 package com.infinitelambda.userservice.controller;
 
-import com.infinitelambda.userservice.model.UserDTO;
+import com.infinitelambda.userservice.model.User;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -21,16 +21,16 @@ public class UserController {
         this.restTemplate = restTemplateBuilder.build();
     }
 
-    private Map<String, UserDTO> usersMap = new HashMap<>();
+    private Map<String, User> usersMap = new HashMap<>();
 
 
     // Crud Methods
     @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
     public Map createUser(@RequestBody Map<String, String> payload) throws Exception {
 
-        UserDTO userDTO = new UserDTO();
-        userDTO.setFirstName(payload.get("firstName"));
-        userDTO.setLastName(payload.get("lastName"));
+        User user = new User();
+        user.setFirstName(payload.get("firstName"));
+        user.setLastName(payload.get("lastName"));
 
         String url = "http://localhost:8008/create";
         Map<String, String> addressForUser = new HashMap<>();
@@ -44,21 +44,21 @@ public class UserController {
             throw new RuntimeException(errorMessage);
         }
 
-        usersMap.put(payload.get("id"), userDTO);
+        usersMap.put(payload.get("id"), user);
         return usersMap;
     }
 
     @GetMapping(value = "/get", consumes = "application/json", produces = "application/json")
-    public UserDTO getUser(@RequestBody HashMap<String, String> payload) {
+    public User getUser(@RequestBody HashMap<String, String> payload) {
         String id = payload.get("id");
         return usersMap.get(id);
     }
 
     @PutMapping(value = "/modify", consumes = "application/json", produces = "application/json")
-    public UserDTO modify(@RequestBody HashMap<String, String> payload) {
+    public User modify(@RequestBody HashMap<String, String> payload) {
         String id = payload.get("id");
 
-        UserDTO modifiedUser = usersMap.get(id);
+        User modifiedUser = usersMap.get(id);
         modifiedUser.setFirstName(payload.get("firstname"));
         modifiedUser.setLastName(payload.get("lastname"));
 
@@ -72,7 +72,7 @@ public class UserController {
     @DeleteMapping("/delete")
     public Map deleteUser(@RequestBody HashMap<String,String> payload) {
         String uuid = payload.get("id");
-        UserDTO deleted = usersMap.remove(uuid);
+        User deleted = usersMap.remove(uuid);
 
         String url = "http://localhost:8008/delete";
         this.restTemplate.delete(url, uuid);
