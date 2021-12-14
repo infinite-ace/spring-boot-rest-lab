@@ -12,9 +12,10 @@ import java.util.List;
 public class User {
 
     @Id
-    private Long id;
+    private String id;
     private String firstName;
     private String lastName;
+    private Integer favouriteNumber;
 
     public User() {
     }

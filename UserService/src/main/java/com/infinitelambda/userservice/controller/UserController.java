@@ -135,10 +135,16 @@ public class UserController {
     public void testCreate(@RequestBody Map<String, String> payload) throws Exception {
 
         User user = new User();
-        user.setId(Long.valueOf(payload.get("id")));
+        user.setId(payload.get("id"));
+        user.setFavouriteNumber(Integer.valueOf(payload.get("favouriteNumber")));
         user.setFirstName(payload.get("firstName"));
         user.setLastName(payload.get("lastName"));
 
         userService.addUser(user);
+    }
+
+    @GetMapping("/favourite/number")
+    public List<User> testQuery(@RequestBody Map<String, String> payload) {
+        return userService.findUsersByFavNum(Integer.valueOf(payload.get("favouriteNumber")));
     }
 }
