@@ -1,12 +1,15 @@
-package com.infinitelambda.userservice;
+package com.infinitelambda.userservice.migrations;
 
+import com.infinitelambda.userservice.model.User;
 import com.infinitelambda.userservice.model.UserService;
 import io.mongock.api.annotations.Execution;
 import io.mongock.api.annotations.ChangeUnit;
 import io.mongock.api.annotations.RollbackExecution;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@ChangeUnit(id="client-initializer", order = "1", author = "mongock")
+// Here we change the id of the migration in order to run it
+@ChangeUnit(id="client-initializer-2", order = "1", author = "mongock")
 public class UserInitializerChange {
 
     private final MongoTemplate mongoTemplate;
@@ -25,10 +28,13 @@ public class UserInitializerChange {
      **/
     @Execution
     public void changeSet() {
-        System.out.println("changeset");
-//        thirdPartyService.getData()
-//                .stream()
-//                .forEach(client -> mongoTemplate.save(client, CLIENTS_COLLECTION_NAME));
+        User user = new User();
+        user.setId("zj1103-12xcny1-su12na-12n12msc");
+        user.setFavouriteNumber(4);
+        user.setFirstName("Michael");
+        user.setLastName("Bradley");
+
+        userService.addUser(user);
     }
 
     /**
@@ -39,6 +45,5 @@ public class UserInitializerChange {
     @RollbackExecution
     public void rollback() {
 //        mongoTemplate.deleteMany(new Document());
-        System.out.println("rollback");
     }
 }

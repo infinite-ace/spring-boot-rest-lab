@@ -12,4 +12,4 @@ spring:
 mongock:
   enabled: true
   migration-scan-package:
-    - com.infinitelambda.userservice
+    - com.infinitelambda.userservice.migrations
