@@ -1,6 +1,8 @@
 package com.infinitelambda.userservice.controller;
 
 import com.infinitelambda.userservice.model.User;
+import com.infinitelambda.userservice.model.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@Service
 public class UserController {
+
+    @Autowired
+    private UserService userService;
 
     private final RestTemplate restTemplate;
 
@@ -125,5 +129,16 @@ public class UserController {
         Map<String, String> response = new HashMap<>();
         response.put("message", "Transaction executed and saved successfully!");
         return response;
+    }
+
+    @PostMapping(value = "/testCreate", consumes = "application/json", produces = "application/json")
+    public void testCreate(@RequestBody Map<String, String> payload) throws Exception {
+
+        User user = new User();
+        user.setId(Long.valueOf(payload.get("id")));
+        user.setFirstName(payload.get("firstName"));
+        user.setLastName(payload.get("lastName"));
+
+        userService.addUser(user);
     }
 }
