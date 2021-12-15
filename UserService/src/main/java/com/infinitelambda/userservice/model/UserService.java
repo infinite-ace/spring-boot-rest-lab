@@ -21,6 +21,15 @@ public class UserService {
         return users;
     }
 
+    public void deleteUser(User user) {
+        userRepository.delete(user);
+    }
+
+    public User findUserById(String uuid) {
+        User user = userRepository.findById(uuid).orElseThrow();
+        return user;
+    }
+
     public List<User> findAll() {
         return userRepository.findAll();
     }

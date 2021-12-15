@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 // Here we change the id of the migration in order to run it
-@ChangeUnit(id="client-initializer-2", order = "1", author = "mongock")
+@ChangeUnit(id="client-initializer-4", order = "1", author = "mongock")
 public class UserInitializerChange {
 
     private final MongoTemplate mongoTemplate;
@@ -44,6 +44,7 @@ public class UserInitializerChange {
      **/
     @RollbackExecution
     public void rollback() {
+        userService.deleteUser(userService.findUserById("zj1103-12xcny1-su12na-12n12msc"));
 //        mongoTemplate.deleteMany(new Document());
     }
 }
