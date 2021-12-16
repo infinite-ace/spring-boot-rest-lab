@@ -1,6 +1,7 @@
 package com.infinitelambda.userservice.controller;
 
 import com.infinitelambda.userservice.model.User;
+import com.infinitelambda.userservice.model.UserDTO;
 import com.infinitelambda.userservice.model.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -16,6 +17,8 @@ import java.util.Map;
 @RestController
 public class UserController {
 
+    // TODO CONVERT HASHMAPS TO DTOS
+
     @Autowired
     private UserService userService;
 
@@ -27,18 +30,13 @@ public class UserController {
 
     private Map<String, User> usersMap = new HashMap<>();
 
-
     // Crud Methods
     @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
-    public Map createUser(@RequestBody Map<String, String> payload) throws Exception {
-
-        User user = new User();
-        user.setFirstName(payload.get("firstName"));
-        user.setLastName(payload.get("lastName"));
+    public UserDTO createUser(@RequestBody UserDTO userDTO) throws Exception {
 
         String url = "http://localhost:8008/create";
         Map<String, String> addressForUser = new HashMap<>();
-        addressForUser.put(payload.get("id"), payload.get("address"));
+        addressForUser.put(userDTO.getId(), userDTO.getAddress());
 
         try {
             this.restTemplate.postForObject(url, addressForUser, String.class);
@@ -48,8 +46,10 @@ public class UserController {
             throw new RuntimeException(errorMessage);
         }
 
-        usersMap.put(payload.get("id"), user);
-        return usersMap;
+        User user = UserDTO.fromDto(userDTO);
+        userService.addUser(user);
+
+        return userDTO;
     }
 
     @GetMapping(value = "/get", consumes = "application/json", produces = "application/json")

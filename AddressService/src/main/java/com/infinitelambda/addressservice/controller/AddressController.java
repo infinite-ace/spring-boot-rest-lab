@@ -1,5 +1,14 @@
 package com.infinitelambda.addressservice.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.infinitelambda.addressservice.model.Address;
+import com.infinitelambda.addressservice.model.AddressService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -12,18 +21,24 @@ public class AddressController {
 
     private Map<String, List<String>> addressBook = new HashMap<>();
 
+    @Autowired
+    private AddressService addressService;
+
     @PostMapping("/create")
-    public void createAddress(@RequestBody HashMap<String,String> payload) {
+    public Address createAddress(@RequestBody HashMap<String,String> payload) {
 
         String uuid = payload.keySet().stream().findFirst().get();
-        String address = payload.get(payload.keySet().toArray()[0]);
+        String addr = payload.get(payload.keySet().toArray()[0]);
 
-        if (addressBook.get(uuid) == null) {
-            // List is empty, then we add a new one with our address
-            List<String> addressList = new ArrayList<>();
-            addressList.add(address);
-            addressBook.put(uuid, addressList);
-        }
+        Address address = new Address();
+        List<String> addrList = new ArrayList<>();
+        addrList.add(addr);
+
+        address.setAddress(addrList);
+        address.setUserUuid(uuid);
+        addressService.save(address);
+
+        return address;
     }
 
     @DeleteMapping("/delete")
@@ -32,18 +47,18 @@ public class AddressController {
     }
 
     @GetMapping("/all")
-    public Map<String, List<String>> getAllAddresses() {
-        return addressBook;
+    public List<Address> getAllAddresses() {
+        return addressService.getAll();
     }
 
-    @PostMapping(value = "/getAddress", consumes = "application/json", produces = "application/json")
-    public List<String> getAddress(@RequestBody HashMap<String,String> payload) {
+    @GetMapping(value = "/find")
+    public ResponseEntity<JsonNode> getAddresses(@RequestBody String uuid) throws JsonProcessingException {
 
-        String uuid = payload.get("id");
-        // Adding the first or an additional address to the List for specific user
-        addressBook.get(uuid).add(uuid);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = addressService.getAddressesByUserUuid(uuid).toString();
+        JsonNode jsonNode = mapper.readTree(json);
 
-        return addressBook.get(uuid);
+        return ResponseEntity.ok(jsonNode);
     }
 
     // Additional endpoints
