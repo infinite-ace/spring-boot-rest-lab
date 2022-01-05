@@ -1,0 +1,21 @@
+version: '3.7'
+
+volumes:
+  data:
+
+services:
+  api-database:
+    image: "mongo:latest"
+    restart: always
+    ports:
+      - "27018:27028"
+  address_service:
+    image: address-service-api
+    build: .
+    restart: always
+    ports:
+      - "9091:8080"
+    depends_on:
+      - api-database
+
+

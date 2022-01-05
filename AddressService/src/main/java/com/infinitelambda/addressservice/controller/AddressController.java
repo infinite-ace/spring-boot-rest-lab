@@ -19,8 +19,6 @@ import java.util.Map;
 @RestController
 public class AddressController {
 
-    private Map<String, List<String>> addressBook = new HashMap<>();
-
     @Autowired
     private AddressService addressService;
 
@@ -34,7 +32,7 @@ public class AddressController {
         List<String> addrList = new ArrayList<>();
         addrList.add(addr);
 
-        address.setAddress(addrList);
+        address.setAddresses(addrList);
         address.setUserUuid(uuid);
         addressService.save(address);
 
@@ -43,7 +41,7 @@ public class AddressController {
 
     @DeleteMapping("/delete")
     public void deleteAddressesForUser(@RequestBody String uuid) {
-        addressBook.remove(uuid);
+//        addressService.delete(uuid);
     }
 
     @GetMapping("/all")
@@ -67,7 +65,7 @@ public class AddressController {
         String uuid = payload.get("id");
         String address = payload.get("address");
 
-        addressBook.get(uuid).add(address);
+//        addressBook.get(uuid).add(address);
 
         // Response msg
         Map<String, String> response = new HashMap<>();

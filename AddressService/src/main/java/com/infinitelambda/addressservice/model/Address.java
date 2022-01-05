@@ -12,7 +12,7 @@ import java.util.Map;
 public class Address {
     @Id
     String userUuid;
-    List<String> address;
+    List<String> addresses;
 
     public Address() {
     }

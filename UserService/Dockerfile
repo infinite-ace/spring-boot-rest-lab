@@ -22,9 +22,7 @@ FROM openjdk:11 as runtime
 
 WORKDIR /tmp/
 RUN mkdir docker_lab
-#RUN mkdir failsafe-reports
 COPY --from=builder /project/target/docker_lab docker_lab
-#COPY --from=builder /project/target/failsafe-reports failsafe-reports
 
 WORKDIR /app
 COPY --from=builder /project/target/demo-0.0.1-SNAPSHOT.jar .

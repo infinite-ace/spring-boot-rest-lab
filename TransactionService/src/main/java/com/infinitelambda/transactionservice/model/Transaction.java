@@ -13,10 +13,10 @@ public class Transaction {
 
     @Id
     private Long id;
-    String vendor;
-    Double amount;
-    LocalDate date;
-    LocalTime time;
+    private String vendor;
+    private Double amount;
+    private LocalDate date;
+    private LocalTime time;
 
     public Transaction() {
     }

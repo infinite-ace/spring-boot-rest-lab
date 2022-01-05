@@ -3,9 +3,7 @@ server:
 spring:
   data:
     mongodb:
-      host: localhost
-      port: 49707
-      database: tap-spring-hibernate-users
+      uri: mongodb://localhost:27017/tap-spring-hibernate-users
   jackson:
     default-property-inclusion: NON_NULL
 

@@ -21,4 +21,14 @@ public class AddressService {
     public void save(Address address) {
         addressRepository.save(address);
     }
+
+    public void delete(String uuid) {
+//
+//        Address adr = new Address();
+//        adr.setUserUuid(uuid);
+//        adr.setAddresses(addressRepository.findAddressesByUserUuid(uuid));
+//
+//        addressRepository.delete(adr);
+
+    }
 }
