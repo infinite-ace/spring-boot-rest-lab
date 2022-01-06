@@ -13,9 +13,7 @@ COPY . /project
 WORKDIR /project
 RUN mvn --settings /usr/share/maven/ref/settings-docker.xml clean install
 RUN mkdir -p /project/target/docker_lab
-#RUN mkdir -p /project/target/failsafe-reports
 
-#final stage - copy artifacts and tests
 FROM openjdk:11 as runtime
 
 WORKDIR /tmp/
@@ -28,20 +26,6 @@ COPY --from=builder /project/target/demo-0.0.1-SNAPSHOT.jar .
 EXPOSE 8004
 
 ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=default", "demo-0.0.1-SNAPSHOT.jar"]
-
-#"Dspring.profiles.active=${ENVIRONMENT:dev}",
-
-#
-#FROM openjdk:17
-#
-#WORKDIR /app
-#
-#COPY target/demo-0.0.1-SNAPSHOT.jar /app
-#
-#EXPOSE 8004
-#
-#ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=default", "demo-0.0.1-SNAPSHOT.jar"]
-
 
 
 
