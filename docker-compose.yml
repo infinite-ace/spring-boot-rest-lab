@@ -1,0 +1,55 @@
+version: '3.7'
+
+volumes:
+  data:
+
+networks:
+  microservice-network:
+    driver: bridge
+
+services:
+  mongodb:
+    hostname: mongodb
+    image: "mongo:latest"
+    restart: always
+    container_name: mongodb
+    networks:
+      - microservice-network
+    ports:
+      - "27017:27017"
+
+  user-service:
+    build: ./UserService
+    restart: always
+    networks:
+      - microservice-network
+    ports:
+      - "8004:8004"
+
+  address-service:
+    build: ./AddressService
+    restart: always
+    networks:
+      - microservice-network
+    ports:
+      - "8007:8007"
+
+  transaction-service:
+    build: ./TransactionService
+    restart: always
+    networks:
+      - microservice-network
+    ports:
+      - "8024:8024"
+
+
+
+#  test-service:
+#    image: openjdk:11
+#    command: sleep 5h
+#    restart: always
+#    depends_on:
+#      - mongodb
+#    networks:
+#      - microservice-network
+#
